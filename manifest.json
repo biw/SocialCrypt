@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+
+  "name": "FB Post Encryption",
+  "description": "This extension Eny/Dec messages in Facebook.",
+  "version": "0.01",
+
+  "permissions": [
+    "https://facebook.com/"
+  ],
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  }
+}
