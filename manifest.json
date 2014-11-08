@@ -14,7 +14,7 @@
     {
       "matches": ["http://www.facebook.com/*", "https://www.facebook.com/*"],
       "css": ["newStyle.css"],
-      "js": ["jquery-2.1.1.min.js", "jsencrypt.js", "newScript.js"]
+      "js": ["jquery-2.1.1.min.js", "jsencrypt.min.js", "newScript.js"]
     }
   ]
 
