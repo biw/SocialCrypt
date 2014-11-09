@@ -13,14 +13,30 @@ chrome.storage.sync.get('EncEnabled', function (result) {
 });
 
 
-console.log( syncGet("CurrentCy"));
-
-
-
 chrome.storage.sync.get('CurrentCy', function(result) {
     Cipher = result.CurrentCy;
-    console.log( result);
+    //console.log( result);
 });
+
+function facebookadder() {
+    var facebook_content = '<div id="fb_added_content">Choose Key: <input id="fb_added_keys"> <button id="encypt_button">Encypt text</button></div>'
+    $("#contentArea").prepend(facebook_content);
+}
+
+
+
+//when the user clicks to encypt
+$(document).delegate("#encypt_button", "click", function(x) {
+
+    //get the value
+    var userCipher = $("#encypt_button").prev().val();
+    var UserText = $(".mentionsTextarea").val();
+    var newText = cipher(UserText, userCipher);
+
+    $(".mentionsTextarea").val(newText);
+
+    chrome.storage.sync.set({'CurrentCy': userCipher});
+})
 
 //get the start item
 var currentItem = $(".userContent")[0];
@@ -28,8 +44,12 @@ var currentItem = $(".userContent")[0];
 //when the page loads
 $(document).ready(function () {
 
+    facebookadder();
+
     //run main to start
     main();
+
+
 });
 
 //when someone clicks something
@@ -45,7 +65,9 @@ $(document).on("click", function () {
             //console.log("change url");
 
             //change the start text
-            currentItem = $(".userContent")[0]
+            currentItem = $(".userContent")[0];
+
+            facebookadder();
 
             //run main again
             main();
@@ -55,7 +77,7 @@ $(document).on("click", function () {
 
 function syncGet(keyword) {
     chrome.storage.sync.get(keyword, function(result) {
-        console.log(result);
+        //console.log(result);
         return result;
     });
 }
