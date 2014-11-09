@@ -9,11 +9,11 @@
         $(function () {
 
             $('#cipher').click(function(){
-                $('#encryptedText').val(cipher($('#plainText').val()));
+                $('#encryptedText').val(newCipher($('#plainText').val(), $('#code').val()));
             });
 
             $('#decipher').click(function(){
-                $('#plainText').val(decipher($('#encryptedText').val()));
+                $('#plainText').val(newDecipher($('#encryptedText').val(), $('#code').val()));
             });
 
             function cipher(plainText){
@@ -53,16 +53,68 @@
                 return out;
             }
 
-            function createCipher() {
-                var cipher = $('#code').val();
-                var len = cipher.length;
+            function createCipher(code) {
+                var len = code.length;
                 var cipherVal = 0;
 
                 for (var j = 0; j < len; j++){
-                    cipherVal += cipher.charCodeAt(j);
+                    cipherVal += code.charCodeAt(j);
                 }
                 return cipherVal % 94;
             }
+
+            function newCipher(plainText, code){
+
+                var keyLen = code.length;
+
+                var cipherValues = new Array(0);
+
+                for (var j = 0; j < keyLen; j++){
+                    cipherValues[j] = createCipher(code.charAt(j));
+                }
+
+                //Cipher the text
+                var len = plainText.length;
+
+                var out = "";
+                for (var i = 0; i < len; i++) {
+                    if ((plainText.charCodeAt(i) + cipherValues[i % keyLen]) < 127) {
+                        out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cipherValues[i % keyLen]));
+                    }
+                    else {
+                        out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cipherValues[i % keyLen] - 94));
+                    }
+                }
+                return out;
+            }
+
+            function newDecipher(plainText, code){
+
+                var keyLen = code.length;
+
+                var cipherValues = new Array(0);
+
+                for (var j = 0; j < keyLen; j++){
+                    cipherValues[j] = createCipher(code.charAt(j));
+                }
+
+                //Cipher the text
+                var len = plainText.length;
+
+                var out = "";
+                for (var i = 0; i < len; i++) {
+                    if ((plainText.charCodeAt(i) - cipherValues[i % keyLen]) > 31) {
+                        out = out.concat(String.fromCharCode(plainText.charCodeAt(i) - cipherValues[i % keyLen]));
+                    }
+                    else {
+                        out = out.concat(String.fromCharCode(plainText.charCodeAt(i) - cipherValues[i % keyLen] + 94));
+                    }
+                }
+                return out;
+            }
+
+
+
 
         })
 

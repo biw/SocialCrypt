@@ -77,19 +77,67 @@ function main() {
         var encyt_flag = dataText.slice(0, 5);
         var message = dataText.slice(5);
 
-        //debugging log
-        //console.log("flag:", encyt_flag);
-
         //if the flag is valid, change the message
         if (encyt_flag == "<enc>") {
 
-            var out = decipher(message, Cipher);
+            var out = newDecipher(message, Cipher);
             
             //temp message change
             dataDom.html(out);
         }
     }
 };
+
+function newCipher(plainText, code){
+
+    var keyLen = code.length;
+
+    var cipherValues = new Array(0);
+
+    for (var j = 0; j < keyLen; j++){
+        cipherValues[j] = createCipher(code.charAt(j));
+    }
+
+    //Cipher the text
+    var len = plainText.length;
+
+    var out = "";
+    for (var i = 0; i < len; i++) {
+        if ((plainText.charCodeAt(i) + cipherValues[i % keyLen]) < 127) {
+            out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cipherValues[i % keyLen]));
+        }
+        else {
+            out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cipherValues[i % keyLen] - 94));
+        }
+    }
+    return out;
+}
+
+function newDecipher(plainText, code){
+
+    var keyLen = code.length;
+
+    var cipherValues = new Array(0);
+
+    for (var j = 0; j < keyLen; j++){
+        cipherValues[j] = createCipher(code.charAt(j));
+    }
+
+    //Cipher the text
+    var len = plainText.length;
+
+    var out = "";
+    for (var i = 0; i < len; i++) {
+        if ((plainText.charCodeAt(i) - cipherValues[i % keyLen]) > 31) {
+            out = out.concat(String.fromCharCode(plainText.charCodeAt(i) - cipherValues[i % keyLen]));
+        }
+        else {
+            out = out.concat(String.fromCharCode(plainText.charCodeAt(i) - cipherValues[i % keyLen] + 94));
+        }
+    }
+    return out;
+}
+
 
 function cipher(plainText, code){
     var cValue = createCipher(code);
