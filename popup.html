@@ -1,12 +1,14 @@
 <html>
 <head>
     <script src="jquery-2.1.1.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="popup.css">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 
 </head>
-<body style="width: 250px; display: block; text-align: center;">
-Facebook Encryption <div id="checked"></div>
-<br>
-CipherText: <input type="text" id="cipher" name="cipher" placeholder="Enter a value or word">
+<body>
+<div class="title">Clever Encypt</div>
+<div id="checked"><input type="checkbox" id="enc" name="enc" checked></div>
+<input type="text" class="cipher" name="cipher" placeholder="Enter a new cipher next">
 <br>
 <input type="button" id="save" value="Save" name="save">
 <script src="popup.js"></script>

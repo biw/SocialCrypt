@@ -12,8 +12,14 @@ chrome.storage.sync.get('EncEnabled', function (result) {
     EncEnabled = result.EncEnabled;
 });
 
+
+console.log( syncGet("CurrentCy"));
+
+
+
 chrome.storage.sync.get('CurrentCy', function(result) {
     Cipher = result.CurrentCy;
+    console.log( result);
 });
 
 if(EncEnabled == true) {
@@ -46,6 +52,13 @@ if(EncEnabled == true) {
                 main();
             }
         }, 2000);
+    });
+}
+
+function syncGet(keyword) {
+    chrome.storage.sync.get(keyword, function(result) {
+        console.log(result);
+        return result;
     });
 }
 

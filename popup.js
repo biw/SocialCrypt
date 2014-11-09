@@ -14,7 +14,7 @@
 
     chrome.storage.sync.get('CurrentCy', function(result) {
 
-        $("#cipher").val(result.CurrentCy);
+        $(".cipher").val(result.CurrentCy);
     });
 
 
@@ -22,7 +22,7 @@
     $("#save").click(function() {
         var Enabler = $("#enc").is(":checked");
 
-        var Cipher = $("#cipher").val();
+        var Cipher = $(".cipher").val();
 
         chrome.storage.sync.set({"EncEnabled": Enabler, "CurrentCy": Cipher});
     });

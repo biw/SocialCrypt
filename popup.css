@@ -1,0 +1,58 @@
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+*:focus {
+    outline: 0;
+}
+
+body {
+    border:0px solid #000;
+    width: 250px;
+    overflow: hidden;
+    height: 150px;
+    display: block;
+    padding: 0 0 0 0;
+    font-size: 14px;
+    color: #222;
+
+}
+
+.title {
+    width: 230px;
+    height: 25px;
+    padding: 10px;
+    background: lightsteelblue;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.cipher {
+    border-bottom: 1px solid #999;
+    padding: 5px 5px 5px 15px;
+}
+
+#checked {
+    position: absolute;
+    top: 18px;
+    left: 220px;
+}
+
+#save {
+    background: lightsteelblue;
+    text-align: center;
+    padding: 5px;
+    border-radius: 3px;
+    margin: auto;
+    display: block;
+    margin: 40px auto 0 auto;
+}
+
+#save:hover {
+    cursor: pointer;
+}
