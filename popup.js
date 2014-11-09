@@ -23,6 +23,7 @@
         var Enabler = $("#enc").is(":checked");
 
         var Cipher = $(".cipher").val();
+        chrome.storage.sync.set({"CurrentCy": ["nullptr, Cipher"]});
         chrome.storage.sync.get("CurrentCy", function(result) {
 
             if(result.CurrentCy == null) {
