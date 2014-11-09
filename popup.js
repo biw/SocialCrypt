@@ -24,7 +24,7 @@
 
         var Cipher = $("#cipher").val();
 
-        chrome.storage.sync.set({"EncEnabled": Enabler, "CurrentSy": Cipher});
+        chrome.storage.sync.set({"EncEnabled": Enabler, "CurrentCy": Cipher});
     });
 
 console.log("awd");
