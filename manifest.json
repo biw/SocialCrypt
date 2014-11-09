@@ -18,7 +18,7 @@
     {
       "matches": ["http://www.facebook.com/*", "https://www.facebook.com/*"],
       "css": ["newStyle.css"],
-      "js": ["jquery-2.1.1.min.js", "http://crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/md5.js", "newScript.js"]
+      "js": ["jquery-2.1.1.min.js", "md5.js", "newScript.js"]
     }
   ]
 
