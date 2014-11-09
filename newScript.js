@@ -37,7 +37,7 @@ $(document).on("click", function() {
         if ($(".userContent")[0] != currentItem) {
 
             //debugging log
-            console.log("change url");
+            //console.log("change url");
 
             //change the start text
             currentItem = $(".userContent")[0]
@@ -67,7 +67,7 @@ function main() {
         var message = dataText.slice(5);
 
         //debugging log
-        console.log("flag:", encyt_flag);
+        //console.log("flag:", encyt_flag);
 
         //if the flag is valid, change the message
         if (encyt_flag == "<enc>") {
