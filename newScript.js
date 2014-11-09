@@ -50,11 +50,10 @@ $(document).delegate("#encypt_button", "click", function(x) {
 //get the start item
 var currentItem = $(".userContent")[0];
 
-var postadder = 0;
-
 //when the page loads
 $(document).ready(function () {
 
+    //load the facebook
     facebookadder();
 
     //run main to start
@@ -72,10 +71,6 @@ $(document).on("click", function () {
         //if the items has changed
         if ($(".userContent")[0] != currentItem) {
 
-            if ($(".userContent")[postadder + 1] == currentItem) {
-                postadder++;
-            }
-
             //debugging log
             //console.log("change url");
             $(".fb_added_content").remove();;
@@ -84,15 +79,10 @@ $(document).on("click", function () {
             //run main again
             main();
         }
+        //two seconds
     }, 2000);
 });
 
-function syncGet(keyword) {
-    chrome.storage.sync.get(keyword, function(result) {
-        //console.log(result);
-        return result;
-    });
-}
 
 //main function
 function main() {
@@ -121,29 +111,49 @@ function main() {
 
             //var out = newDecipher(message, Cipher);
 
+            //set if the key is correct
             var rightKey = false;
+
+            //set the correct Cipher
             var correctCipher = "";
+
+            //get the Cipher length
             var cipherLen = Cipher.length;
-            var out = "Decipher FAILED.";
+
+            //set the output
+            var out = "";
             //console.log(cipherLen);
 
+            //for each of the keys
             for(var j = 0; j < cipherLen; j++) {
+
+                //set the current key
                 rightKey = isKey(Cipher[j], hash, message);
                 //console.log(Cipher[j]);
 
+                //if the key is correct
                 if (rightKey) {
+
+                    //set the correctCiphers for the current one
                     correctCipher = Cipher[j];
+
                     //console.log("Found it", Cipher[j]);
+
+                    //set the output
                     out = newDecipher(message, correctCipher);
 
                     //output new text
                     dataDom.html(out);
 
+                    //change the found flag
                     foundItem = true;
                 }
             }
 
+            //if we havn't found the right key
             if(!foundItem) {
+
+                //tell the user
                 dataDom.text("<Invalid Creditials>");
             }
         }
