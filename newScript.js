@@ -64,7 +64,7 @@ function main() {
 
         //check the encryption flag
         var encyt_flag = dataText.slice(0, 5);
-        var message = dataText.slice(6);
+        var message = dataText.slice(5);
 
         //debugging log
         console.log("flag:", encyt_flag);
