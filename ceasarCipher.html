@@ -28,7 +28,7 @@
                         out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cValue));
                     }
                     else {
-                        out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cValue - 127));
+                        out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cValue - 94));
                     }
                 }
                 return out;
@@ -47,7 +47,7 @@
                         out = out.concat(String.fromCharCode(encryptedText.charCodeAt(i) - cValue));
                     }
                     else {
-                        out = out.concat(String.fromCharCode(encryptedText.charCodeAt(i) - cValue + 127));
+                        out = out.concat(String.fromCharCode(encryptedText.charCodeAt(i) - cValue + 94));
                     }
                 }
                 return out;
@@ -55,10 +55,10 @@
 
             function createCipher() {
                 var cipher = $('#code').val();
-                var j = $('#code').length;
+                var len = cipher.length;
                 var cipherVal = 0;
 
-                while(j--){
+                for (var j = 0; j < len; j++){
                     cipherVal += cipher.charCodeAt(j);
                 }
                 return cipherVal % 94;

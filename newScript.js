@@ -37,7 +37,7 @@ $(document).on("click", function() {
         if ($(".userContent")[0] != currentItem) {
 
             //debugging log
-            //console.log("change url");
+            console.log("change url");
 
             //change the start text
             currentItem = $(".userContent")[0]
@@ -67,7 +67,7 @@ function main() {
         var message = dataText.slice(5);
 
         //debugging log
-        //console.log("flag:", encyt_flag);
+        console.log("flag:", encyt_flag);
 
         //if the flag is valid, change the message
         if (encyt_flag == "<enc>") {
@@ -92,7 +92,7 @@ function cipher(plainText, code){
             out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cValue));
         }
         else {
-            out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cValue - 127));
+            out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cValue - 94));
         }
     }
     return out;
@@ -111,17 +111,17 @@ function decipher(encryptedText, code){
             out = out.concat(String.fromCharCode(encryptedText.charCodeAt(i) - cValue));
         }
         else {
-            out = out.concat(String.fromCharCode(encryptedText.charCodeAt(i) - cValue + 127));
+            out = out.concat(String.fromCharCode(encryptedText.charCodeAt(i) - cValue + 94));
         }
     }
     return out;
 }
 
 function createCipher(code) {
-    var j = code.length;
+    var len = code.length;
     var cipherVal = 0;
 
-    while(j--){
+    for (var j = 0; j < len; j++){
         cipherVal += code.charCodeAt(j);
     }
     return cipherVal % 94;
