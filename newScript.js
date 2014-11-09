@@ -2,13 +2,20 @@
  * Created by Ben on 11/8/14.
  */
 
-console.log(localStorage["bob"]);
 
-localStorage["bob"] = "cool";
+//set the default vars
+var EncEnabled = false;
+var Cipher = "0";
 
-chrome.storage.local.get('userid', function (result) {
-    console.log(result.userid);
+//get their chrome values
+chrome.storage.sync.get('EncEnabled', function (result) {
+    EncEnabled = result.EncEnabled;
 });
+
+chrome.storage.sync.get('CurrentCy', function(result) {
+    Cipher = result.CurrentCy;
+});
+
 
 //get the start item
 var currentItem = $(".userContent")[0];
@@ -56,13 +63,13 @@ function main() {
         var dataText = dataDom.text();
 
         //check the encryption flag
-        var encyt_flag = dataText.slice(0, 3);
+        var encyt_flag = dataText.slice(0, 5);
 
         //debugging log
         console.log("flag:", encyt_flag);
 
         //if the flag is valid, change the message
-        if (encyt_flag == "enc") {
+        if (encyt_flag == "<enc>") {
 
             //temp message change
             dataDom.html("new secret message");

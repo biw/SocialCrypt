@@ -12,9 +12,9 @@
     });
 
 
-    chrome.storage.sync.get('CurrentSy', function(result) {
+    chrome.storage.sync.get('CurrentCy', function(result) {
 
-        $("#cipher").val(result.CurrentSy);
+        $("#cipher").val(result.CurrentCy);
     });
 
 
