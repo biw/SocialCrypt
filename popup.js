@@ -5,33 +5,26 @@
     chrome.storage.sync.get('EncEnabled', function (result) {
 
         if(result.EncEnabled == true) {
-            $("#checked").html('<input type="checkbox" id="enc" name="enc" checked value="True">');
+            $("#checked").html('<input type="checkbox" id="enc" name="enc" checked>');
         } else {
-            $("#checked").html('<input type="checkbox" id="enc" name="enc" value="True">');
+            $("#checked").html('<input type="checkbox" id="enc" name="enc">');
         }
     });
 
 
     chrome.storage.sync.get('CurrentSy', function(result) {
 
-        $("#cipher").value(result.CurrentSy);
+        $("#cipher").val(result.CurrentSy);
     });
 
 
 
-    $("#cipher").click(function() {
-        var Enabler = $("#checked").value;
-        console.log(Enabler);
+    $("#save").click(function() {
+        var Enabler = $("#enc").is(":checked");
 
-        if(Enabler == "True") {
-            Enabler = true;
+        var Cipher = $("#cipher").val();
 
-        } else {
-            Enabler = false;
-        }
-        var Cipher = $("#cipher").value;
-
-        chrome.storage.sync.set({"EncEnabled": Enabler})
+        chrome.storage.sync.set({"EncEnabled": Enabler, "CurrentSy": Cipher});
     });
 
 console.log("awd");

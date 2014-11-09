@@ -14,10 +14,6 @@
     "default_popup": "popup.html"
   },
 
-  "background": {
-    "scripts": ["background.js"]
-  },
-
   "content_scripts": [
     {
       "matches": ["http://www.facebook.com/*", "https://www.facebook.com/*"],
