@@ -64,6 +64,7 @@ function main() {
 
         //check the encryption flag
         var encyt_flag = dataText.slice(0, 5);
+        var message = dataText.slice(6);
 
         //debugging log
         console.log("flag:", encyt_flag);
@@ -71,14 +72,16 @@ function main() {
         //if the flag is valid, change the message
         if (encyt_flag == "<enc>") {
 
+            var out = decipher(message, Cipher);
+            
             //temp message change
-            dataDom.html("new secret message");
+            dataDom.html(out);
         }
     }
 };
 
-function cipher(plainText){
-    var cValue = createCipher();
+function cipher(plainText, code){
+    var cValue = createCipher(code);
 
     //Cipher the text
     var len = plainText.length;
@@ -95,9 +98,9 @@ function cipher(plainText){
     return out;
 }
 
-function decipher(encryptedText){
+function decipher(encryptedText, code){
 
-    var cValue = createCipher();
+    var cValue = createCipher(code);
 
     //Decipher the text
     var len = encryptedText.length;
@@ -112,4 +115,14 @@ function decipher(encryptedText){
         }
     }
     return out;
+}
+
+function createCipher(code) {
+    var j = code.length;
+    var cipherVal = 0;
+
+    while(j--){
+        cipherVal += code.charCodeAt(j);
+    }
+    return cipherVal % 94;
 }
