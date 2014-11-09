@@ -5,7 +5,7 @@
 
 //set the default vars
 var EncEnabled = false;
-var Cipher;
+var Cipher = 0;
 
 //get their chrome values
 chrome.storage.sync.get('EncEnabled', function (result) {
@@ -31,7 +31,10 @@ $(document).delegate("#encypt_button", "click", function(x) {
     //get the value
     var userCipher = $("#encypt_button").prev().val();
     var UserText = $(".mentionsTextarea").val();
-    var newText = cipher(UserText, userCipher);
+
+    var encryptedText = newCipher(UserText, userCipher);
+    var hashText = makeHash(userCipher.concat(encryptedText));
+    var newText = "<enc"+hashText+">"+encryptedText;
 
     $(".mentionsTextarea").val(newText);
 
@@ -96,19 +99,43 @@ function main() {
         var dataText = dataDom.text();
 
         //check the encryption flag
-        var encyt_flag = dataText.slice(0, 5);
-        var message = dataText.slice(5);
+        var encryt_flag = dataText.slice(0, 4);
+        var hash = dataText.slice(4, 37);
+        var message = dataText.slice(37);
 
         //if the flag is valid, change the message
-        if (encyt_flag == "<enc>") {
+        if (encryt_flag == "<enc") {
 
-            var out = newDecipher(message, Cipher);
-            
-            //temp message change
+            //var out = newDecipher(message, Cipher);
+
+            var rightKey = false;
+
+            rightKey = isKey(Cipher, hash, message);
+
+            var out = "Decipher FAILED.";
+            if (rightKey){
+                out = newDecipher(message, Cipher);
+            }
+
+            //output new text
             dataDom.html(out);
         }
     }
 };
+
+function makeHash(txt){
+    return CryptoJS.MD5(txt);
+}
+
+function isKey(code, hashText, encryptedText){
+    var a = code.concat(encryptedText);
+    var tempHash = CryptoJS.MD5(a);
+
+    if (tempHash == hashText){
+        return true;
+    }
+    else return false;
+}
 
 function newCipher(plainText, code){
 
