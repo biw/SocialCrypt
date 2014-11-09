@@ -138,44 +138,6 @@ function newDecipher(plainText, code){
     return out;
 }
 
-
-function cipher(plainText, code){
-    var cValue = createCipher(code);
-
-    //Cipher the text
-    var len = plainText.length;
-
-    var out = "";
-    for (var i = 0; i < len; i++) {
-        if ((plainText.charCodeAt(i) + cValue) < 127) {
-            out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cValue));
-        }
-        else {
-            out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cValue - 94));
-        }
-    }
-    return out;
-}
-
-function decipher(encryptedText, code){
-
-    var cValue = createCipher(code);
-
-    //Decipher the text
-    var len = encryptedText.length;
-
-    var out = "";
-    for (var i = 0; i < len; i++) {
-        if ((encryptedText.charCodeAt(i) - cValue) > 31) {
-            out = out.concat(String.fromCharCode(encryptedText.charCodeAt(i) - cValue));
-        }
-        else {
-            out = out.concat(String.fromCharCode(encryptedText.charCodeAt(i) - cValue + 94));
-        }
-    }
-    return out;
-}
-
 function createCipher(code) {
     var len = code.length;
     var cipherVal = 0;

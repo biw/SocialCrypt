@@ -4,53 +4,54 @@
     <meta charset="UTF-8">
     <title>Ceasar Cipher</title>
     <script src="jquery-2.1.1.min.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/md5.js"></script>
     <script>
 
         $(function () {
-
             $('#cipher').click(function(){
-                $('#encryptedText').val(newCipher($('#plainText').val(), $('#code').val()));
+                var encryptedText = $('#encryptedText');
+                var plainText = $('#plainText');
+                var code = $('#code');
+                var hashText = $('#hashText');
+                var messageText = $('#messageText');
+
+                encryptedText.val(newCipher(plainText.val(), code.val()));
+
+                hashText.val(makeHash(code.val().concat(encryptedText.val())));
+
+                messageText.val("<enc"+hashText.val()+">"+encryptedText.val());
             });
 
             $('#decipher').click(function(){
-                $('#plainText').val(newDecipher($('#encryptedText').val(), $('#code').val()));
+                var encryptedText = $('#encryptedText');
+                var plainText = $('#plainText');
+                var code = $('#code');
+                var hashText = $('#hashText');
+
+
+                var key = false;
+                key = isKey(code, hashText, encryptedText);
+
+                if (key){
+                    plainText.val(newDecipher(encryptedText.val(), code.val()));
+                }
+                else {
+                    plainText.val("Decipher FAILED.");
+                }
+
             });
 
-            function cipher(plainText){
-                var cValue = createCipher();
-
-                //Cipher the text
-                var len = plainText.length;
-
-                var out = "";
-                for (var i = 0; i < len; i++) {
-                    if ((plainText.charCodeAt(i) + cValue) < 127) {
-                        out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cValue));
-                    }
-                    else {
-                        out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cValue - 94));
-                    }
-                }
-                return out;
+            function makeHash(txt){
+                return CryptoJS.MD5(txt);
             }
 
-            function decipher(encryptedText){
+            function isKey(code, hashText, encryptedText){
+                var tempHash = CryptoJS.MD5(code.val().concat(encryptedText.val()));
 
-                var cValue = createCipher();
-
-                //Decipher the text
-                var len = encryptedText.length;
-
-                var out = "";
-                for (var i = 0; i < len; i++) {
-                    if ((encryptedText.charCodeAt(i) - cValue) > 31) {
-                        out = out.concat(String.fromCharCode(encryptedText.charCodeAt(i) - cValue));
-                    }
-                    else {
-                        out = out.concat(String.fromCharCode(encryptedText.charCodeAt(i) - cValue + 94));
-                    }
+                if (tempHash == hashText.val()){
+                    return true;
                 }
-                return out;
+                else return false;
             }
 
             function createCipher(code) {
@@ -137,6 +138,12 @@
     <input id="cipher" type="button" value="Cipher text" /><br/>
 
     <input id="decipher" type="button" value="Decipher text" /><br/>
+
+    <label for="hashText">Hashed message here:</label><br/>
+    <textarea id="hashText" rows="5" cols="65"></textarea><br/>
+
+    <label for="messageText">Full encrypted message here:</label><br/>
+    <textarea id="messageText" rows="5" cols="65"></textarea><br/>
 
 </body>
 
