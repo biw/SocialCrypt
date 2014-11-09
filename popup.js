@@ -23,8 +23,17 @@
         var Enabler = $("#enc").is(":checked");
 
         var Cipher = $(".cipher").val();
+        chrome.storage.sync.get("CurrentCy", function(result) {
 
-        chrome.storage.sync.set({"EncEnabled": Enabler, "CurrentCy": Cipher});
+            if(result.CurrentCy == null) {
+                chrome.storage.sync.set({"EncEnabled": Enabler, "CurrentCy": ["nullptr", Cipher]});
+            } else {
+                console.log("awda");
+                result.CurrentCy.push(Cipher);
+                Cipher = Cipher.split(",");
+                chrome.storage.sync.set({"EncEnabled": Enabler, "CurrentCy": Cipher});
+            }
+        })
     });
 
 console.log("awd");

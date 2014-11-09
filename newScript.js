@@ -37,8 +37,14 @@ $(document).delegate("#encypt_button", "click", function(x) {
     var newText = "<enc"+hashText+">"+encryptedText;
 
     $(".mentionsTextarea").val(newText);
+    $(".mentionsTextarea").parent().parent().parent().next().val(newText);
 
-    chrome.storage.sync.set({'CurrentCy': userCipher});
+    console.log(userCipher);
+    chrome.storage.sync.get('CurrentCy', function(result) {
+        result.CurrentCy.push(userCipher);
+        console.log(result.CurrentCy);
+        chrome.storage.sync.set({'CurrentCy': result.CurrentCy});
+    });
 })
 
 //get the start item
@@ -100,8 +106,10 @@ function main() {
 
         //check the encryption flag
         var encryt_flag = dataText.slice(0, 4);
-        var hash = dataText.slice(4, 37);
+        var hash = dataText.slice(4, 36);
+        console.log(hash);
         var message = dataText.slice(37);
+        console.log(message);
 
         //if the flag is valid, change the message
         if (encryt_flag == "<enc") {
@@ -109,12 +117,23 @@ function main() {
             //var out = newDecipher(message, Cipher);
 
             var rightKey = false;
+            var correctCipher = "";
+            var cipherLen = Cipher.length;
+            console.log(cipherLen);
 
-            rightKey = isKey(Cipher, hash, message);
+            for(var j = 0; j < cipherLen; j++) {
+                rightKey = isKey(Cipher[j], hash, message);
+                console.log(Cipher[j]);
+
+                if(rightKey) {
+                    correctCipher = Cipher[j];
+                    console.log("Found it", Cipher[j]);
+                }
+            }
 
             var out = "Decipher FAILED.";
             if (rightKey){
-                out = newDecipher(message, Cipher);
+                out = newDecipher(message, correctCipher);
             }
 
             //output new text
