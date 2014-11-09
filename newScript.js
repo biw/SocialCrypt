@@ -5,7 +5,7 @@
 
 //set the default vars
 var EncEnabled = false;
-var Cipher = "0";
+var Cipher;
 
 //get their chrome values
 chrome.storage.sync.get('EncEnabled', function (result) {
@@ -16,38 +16,38 @@ chrome.storage.sync.get('CurrentCy', function(result) {
     Cipher = result.CurrentCy;
 });
 
+if(EncEnabled == true) {
+    //get the start item
+    var currentItem = $(".userContent")[0];
 
-//get the start item
-var currentItem = $(".userContent")[0];
+    //when the page loads
+    $(document).ready(function () {
 
-//when the page loads
-$(document).ready(function () {
+        //run main to start
+        main();
+    });
 
-    //run main to start
-    main();
-});
+    //when someone clicks something
+    $(document).on("click", function () {
 
-//when someone clicks something
-$(document).on("click", function() {
+        //wait two seconds
+        window.setTimeout(function () {
 
-    //wait two seconds
-    window.setTimeout(function () {
+            //if the items has changed
+            if ($(".userContent")[0] != currentItem) {
 
-        //if the items has changed
-        if ($(".userContent")[0] != currentItem) {
+                //debugging log
+                //console.log("change url");
 
-            //debugging log
-            console.log("change url");
+                //change the start text
+                currentItem = $(".userContent")[0]
 
-            //change the start text
-            currentItem = $(".userContent")[0]
-
-            //run main again
-            main();
-        }
-    }, 2000);
-});
-
+                //run main again
+                main();
+            }
+        }, 2000);
+    });
+}
 
 //main function
 function main() {
@@ -67,7 +67,7 @@ function main() {
         var message = dataText.slice(5);
 
         //debugging log
-        console.log("flag:", encyt_flag);
+        //console.log("flag:", encyt_flag);
 
         //if the flag is valid, change the message
         if (encyt_flag == "<enc>") {
