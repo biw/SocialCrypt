@@ -22,38 +22,36 @@ chrome.storage.sync.get('CurrentCy', function(result) {
     console.log( result);
 });
 
-if(EncEnabled == true) {
-    //get the start item
-    var currentItem = $(".userContent")[0];
+//get the start item
+var currentItem = $(".userContent")[0];
 
-    //when the page loads
-    $(document).ready(function () {
+//when the page loads
+$(document).ready(function () {
 
-        //run main to start
-        main();
-    });
+    //run main to start
+    main();
+});
 
-    //when someone clicks something
-    $(document).on("click", function () {
+//when someone clicks something
+$(document).on("click", function () {
 
-        //wait two seconds
-        window.setTimeout(function () {
+    //wait two seconds
+    window.setTimeout(function () {
 
-            //if the items has changed
-            if ($(".userContent")[0] != currentItem) {
+        //if the items has changed
+        if ($(".userContent")[0] != currentItem) {
 
-                //debugging log
-                //console.log("change url");
+            //debugging log
+            //console.log("change url");
 
-                //change the start text
-                currentItem = $(".userContent")[0]
+            //change the start text
+            currentItem = $(".userContent")[0]
 
-                //run main again
-                main();
-            }
-        }, 2000);
-    });
-}
+            //run main again
+            main();
+        }
+    }, 2000);
+});
 
 function syncGet(keyword) {
     chrome.storage.sync.get(keyword, function(result) {
