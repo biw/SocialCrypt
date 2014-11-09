@@ -2,3 +2,20 @@
 /*._5v3q ._5pbx>p:last-of-type {
     background: rgb(178, 219, 255);
 }*/
+
+.fb_added_content {
+    display: block;
+    background: #fff;
+    border: 1px solid #e5e6e9;
+    border-radius: 2px;
+    margin: 0 0 10px 0;
+    padding: 10px;
+}
+
+#fb_adder_keys {
+
+}
+
+#encypt_button {
+
+}

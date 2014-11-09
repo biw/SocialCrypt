@@ -19,7 +19,7 @@ chrome.storage.sync.get('CurrentCy', function(result) {
 });
 
 function facebookadder() {
-    var facebook_content = '<div class="fb_added_content">Choose Key: <input id="fb_added_keys"> <button id="encypt_button">Encypt text</button></div>'
+    var facebook_content = '<div class="fb_added_content">Choose Encryption Key: <input id="fb_added_keys"> <button id="encypt_button">Encypt text</button></div>'
     $("#contentArea").prepend(facebook_content);
 }
 
