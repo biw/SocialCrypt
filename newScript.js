@@ -2,6 +2,13 @@
  * Created by Ben on 11/8/14.
  */
 
+console.log(localStorage["bob"]);
+
+localStorage["bob"] = "cool";
+
+chrome.storage.local.get('userid', function (result) {
+    console.log(result.userid);
+});
 
 //get the start item
 var currentItem = $(".userContent")[0];
@@ -58,7 +65,7 @@ function main() {
         if (encyt_flag == "enc") {
 
             //temp message change
-            dataDom.html("new message");
+            dataDom.html("new secret message");
         }
     }
 };

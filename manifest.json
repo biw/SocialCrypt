@@ -5,9 +5,17 @@
   "description": "This extension Eny/Dec messages in Facebook.",
   "version": "0.1",
 
+  "permissions": [
+    "storage"
+  ],
+
   "browser_action": {
     "default_icon": "lockicon.png",
     "default_popup": "popup.html"
+  },
+
+  "background": {
+    "scripts": ["background.js"]
   },
 
   "content_scripts": [
