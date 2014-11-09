@@ -119,25 +119,22 @@ function main() {
             var rightKey = false;
             var correctCipher = "";
             var cipherLen = Cipher.length;
+            var out = "Decipher FAILED.";
             console.log(cipherLen);
 
             for(var j = 0; j < cipherLen; j++) {
                 rightKey = isKey(Cipher[j], hash, message);
                 console.log(Cipher[j]);
 
-                if(rightKey) {
+                if (rightKey) {
                     correctCipher = Cipher[j];
                     console.log("Found it", Cipher[j]);
+                    out = newDecipher(message, correctCipher);
+
+                    //output new text
+                    dataDom.html(out);
                 }
             }
-
-            var out = "Decipher FAILED.";
-            if (rightKey){
-                out = newDecipher(message, correctCipher);
-            }
-
-            //output new text
-            dataDom.html(out);
         }
     }
 };
