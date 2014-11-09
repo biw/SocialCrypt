@@ -19,7 +19,7 @@ chrome.storage.sync.get('CurrentCy', function(result) {
 });
 
 function facebookadder() {
-    var facebook_content = '<div id="fb_added_content">Choose Key: <input id="fb_added_keys"> <button id="encypt_button">Encypt text</button></div>'
+    var facebook_content = '<div class="fb_added_content">Choose Key: <input id="fb_added_keys"> <button id="encypt_button">Encypt text</button></div>'
     $("#contentArea").prepend(facebook_content);
 }
 
@@ -39,16 +39,18 @@ $(document).delegate("#encypt_button", "click", function(x) {
     $(".mentionsTextarea").val(newText);
     $(".mentionsTextarea").parent().parent().parent().next().val(newText);
 
-    console.log(userCipher);
+    //console.log(userCipher);
     chrome.storage.sync.get('CurrentCy', function(result) {
         result.CurrentCy.push(userCipher);
-        console.log(result.CurrentCy);
+        //console.log(result.CurrentCy);
         chrome.storage.sync.set({'CurrentCy': result.CurrentCy});
     });
 })
 
 //get the start item
 var currentItem = $(".userContent")[0];
+
+var postadder = 0;
 
 //when the page loads
 $(document).ready(function () {
@@ -70,12 +72,13 @@ $(document).on("click", function () {
         //if the items has changed
         if ($(".userContent")[0] != currentItem) {
 
+            if ($(".userContent")[postadder + 1] == currentItem) {
+                postadder++;
+            }
+
             //debugging log
             //console.log("change url");
-
-            //change the start text
-            currentItem = $(".userContent")[0];
-
+            $(".fb_added_content").remove();;
             facebookadder();
 
             //run main again
@@ -104,12 +107,14 @@ function main() {
         var dataDom = $(".userContent").slice(i, i + 1);
         var dataText = dataDom.text();
 
+        var foundItem = false;
+
         //check the encryption flag
         var encryt_flag = dataText.slice(0, 4);
         var hash = dataText.slice(4, 36);
-        console.log(hash);
+        //console.log(hash);
         var message = dataText.slice(37);
-        console.log(message);
+        //console.log(message);
 
         //if the flag is valid, change the message
         if (encryt_flag == "<enc") {
@@ -120,20 +125,26 @@ function main() {
             var correctCipher = "";
             var cipherLen = Cipher.length;
             var out = "Decipher FAILED.";
-            console.log(cipherLen);
+            //console.log(cipherLen);
 
             for(var j = 0; j < cipherLen; j++) {
                 rightKey = isKey(Cipher[j], hash, message);
-                console.log(Cipher[j]);
+                //console.log(Cipher[j]);
 
                 if (rightKey) {
                     correctCipher = Cipher[j];
-                    console.log("Found it", Cipher[j]);
+                    //console.log("Found it", Cipher[j]);
                     out = newDecipher(message, correctCipher);
 
                     //output new text
                     dataDom.html(out);
+
+                    foundItem = true;
                 }
+            }
+
+            if(!foundItem) {
+                dataDom.text("<Invalid Creditials>");
             }
         }
     }

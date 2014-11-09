@@ -35,6 +35,7 @@ body {
 .cipher {
     border-bottom: 1px solid #999;
     padding: 5px 5px 5px 15px;
+    width: 250px;
 }
 
 #checked {
@@ -57,7 +58,7 @@ body {
     cursor: pointer;
 }
 
-#fb_adder_content {
+.fb_adder_content {
 
 }
 
