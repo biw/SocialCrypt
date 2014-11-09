@@ -9,15 +9,18 @@
         $(function () {
 
             $('#cipher').click(function(){
+                $('#encryptedText').val(cipher($('#plainText').val()));
+            });
 
+            $('#decipher').click(function(){
+                $('#plainText').val(decipher($('#encryptedText').val()));
+            });
+
+            function cipher(plainText){
                 var cValue = createCipher();
 
                 //Cipher the text
-                var plainText = $('#plainText').val();
                 var len = plainText.length;
-
-
-                //plainText = plainText.toUpperCase();
 
                 var out = "";
                 for (var i = 0; i < len; i++) {
@@ -28,18 +31,15 @@
                         out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cValue - 127));
                     }
                 }
-                $('#encryptedText').val(out);
-            });
+                return out;
+            }
 
-            $('#decipher').click(function(){
+            function decipher(encryptedText){
 
                 var cValue = createCipher();
 
-                //Cipher the text
-                var encryptedText = $('#encryptedText').val();
+                //Decipher the text
                 var len = encryptedText.length;
-
-                //encryptedText = encryptedText.toUpperCase();
 
                 var out = "";
                 for (var i = 0; i < len; i++) {
@@ -50,9 +50,8 @@
                         out = out.concat(String.fromCharCode(encryptedText.charCodeAt(i) - cValue + 127));
                     }
                 }
-                $('#plainText').val(out);
-            });
-
+                return out;
+            }
 
             function createCipher() {
                 var cipher = $('#code').val();

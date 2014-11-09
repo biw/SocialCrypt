@@ -69,3 +69,40 @@ function main() {
         }
     }
 };
+
+function cipher(plainText){
+    var cValue = createCipher();
+
+    //Cipher the text
+    var len = plainText.length;
+
+    var out = "";
+    for (var i = 0; i < len; i++) {
+        if ((plainText.charCodeAt(i) + cValue) < 127) {
+            out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cValue));
+        }
+        else {
+            out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cValue - 127));
+        }
+    }
+    return out;
+}
+
+function decipher(encryptedText){
+
+    var cValue = createCipher();
+
+    //Decipher the text
+    var len = encryptedText.length;
+
+    var out = "";
+    for (var i = 0; i < len; i++) {
+        if ((encryptedText.charCodeAt(i) - cValue) > 31) {
+            out = out.concat(String.fromCharCode(encryptedText.charCodeAt(i) - cValue));
+        }
+        else {
+            out = out.concat(String.fromCharCode(encryptedText.charCodeAt(i) - cValue + 127));
+        }
+    }
+    return out;
+}
