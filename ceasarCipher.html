@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Ceasar Cipher</title>
+    <script src="jquery-2.1.1.min.js"></script>
+    <script>
+
+        $(function () {
+
+            $('#cipher').click(function(){
+
+                var cValue = createCipher();
+
+                //Cipher the text
+                var plainText = $('#plainText').val();
+                var len = plainText.length;
+
+
+                //plainText = plainText.toUpperCase();
+
+                var out = "";
+                for (var i = 0; i < len; i++) {
+                    if ((plainText.charCodeAt(i) + cValue) < 127) {
+                        out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cValue));
+                    }
+                    else {
+                        out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cValue - 127));
+                    }
+                }
+                $('#encryptedText').val(out);
+            });
+
+            $('#decipher').click(function(){
+
+                var cValue = createCipher();
+
+                //Cipher the text
+                var encryptedText = $('#encryptedText').val();
+                var len = encryptedText.length;
+
+                //encryptedText = encryptedText.toUpperCase();
+
+                var out = "";
+                for (var i = 0; i < len; i++) {
+                    if ((encryptedText.charCodeAt(i) - cValue) > 31) {
+                        out = out.concat(String.fromCharCode(encryptedText.charCodeAt(i) - cValue));
+                    }
+                    else {
+                        out = out.concat(String.fromCharCode(encryptedText.charCodeAt(i) - cValue + 127));
+                    }
+                }
+                $('#plainText').val(out);
+            });
+
+
+            function createCipher() {
+                var cipher = $('#code').val();
+                var j = $('#code').length;
+                var cipherVal = 0;
+
+                while(j--){
+                    cipherVal += cipher.charCodeAt(j);
+                }
+                return cipherVal % 94;
+            }
+
+        })
+
+
+
+    </script>
+</head>
+
+<body>
+
+    <label for="code">Enter your cipher here:</label><br/>
+    <textarea id="code" row="1" cols="65"></textarea><br/>
+
+    <label for="plainText">Decrypted message here:</label><br/>
+    <textarea id="plainText" rows="5" cols="65"></textarea><br/>
+
+    <label for="encryptedText">Encrypted message here:</label><br/>
+    <textarea id="encryptedText" rows="5" cols="65"></textarea><br/>
+
+    <input id="cipher" type="button" value="Cipher text" /><br/>
+
+    <input id="decipher" type="button" value="Decipher text" /><br/>
+
+</body>
+
+</html>
