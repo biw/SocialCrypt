@@ -1,8 +1,10 @@
-CodeDay-FB-Encryption
+SocialCrypt
 =====================
+A nice little extention to encypt/decrypt Facebook posts.
 
-Plan for today:
-=======
-
-1. Ency/Dec
-2. Set up the extension
+Future Plans
+-----
+1. Facebook comments
+2. Twitter posts
+3. Reddit posts/comments
+4. Clean up UI
