@@ -7,17 +7,18 @@
 var EncEnabled = false;
 var Cipher = 0;
 
-//get their chrome values
+//get the value if the extention is enabled from  chrome values
 chrome.storage.sync.get('EncEnabled', function (result) {
     EncEnabled = result.EncEnabled;
 });
 
 
+//get the value what the current cypher texts are
 chrome.storage.sync.get('CurrentCy', function(result) {
     Cipher = result.CurrentCy;
-    //console.log( result);
 });
 
+//function to inject code to Facebook
 function facebookadder() {
     var facebook_content = '<div class="fb_added_content">Choose Encryption Key: <input id="fb_added_keys"> <button id="encypt_button">Encypt text</button></div>'
     $("#contentArea").prepend(facebook_content);
@@ -32,16 +33,21 @@ $(document).delegate("#encypt_button", "click", function(x) {
     var userCipher = $("#encypt_button").prev().val();
     var UserText = $(".mentionsTextarea").val();
 
+    //create the new Cipher and Hash
     var encryptedText = newCipher(UserText, userCipher);
     var hashText = makeHash(userCipher.concat(encryptedText));
+
+    //create the text for the text area
     var newText = "<enc"+hashText+">"+encryptedText;
 
+    //add the values to the website
     $(".mentionsTextarea").val(newText);
     $(".mentionsTextarea").parent().parent().parent().next().val(newText);
 
     //console.log(userCipher);
     chrome.storage.sync.get('CurrentCy', function(result) {
         result.CurrentCy.push(userCipher);
+
         //console.log(result.CurrentCy);
         chrome.storage.sync.set({'CurrentCy': result.CurrentCy});
     });
@@ -73,13 +79,16 @@ $(document).on("click", function () {
 
             //debugging log
             //console.log("change url");
+            var fb_value = $("#fb_added_keys").val();
             $(".fb_added_content").remove();;
             facebookadder();
+            $("#fb_added_keys").val(fb_value);
 
             //run main again
             main();
         }
-        //two seconds
+
+    //two seconds
     }, 2000);
 });
 
@@ -160,26 +169,36 @@ function main() {
     }
 };
 
+//function to make Hash
 function makeHash(txt){
+
+    //use the CryptoMD5 library to md5 the text
     return CryptoJS.MD5(txt);
 }
 
+//check if the key is the reverse of the hash
 function isKey(code, hashText, encryptedText){
     var a = code.concat(encryptedText);
     var tempHash = CryptoJS.MD5(a);
 
+    //if the hash is the same
     if (tempHash == hashText){
         return true;
+    } else {
+        return false;
     }
-    else return false;
 }
 
+//create a new Cipher from a plain text and an encoding code
 function newCipher(plainText, code){
 
+    //get the length of the key
     var keyLen = code.length;
 
+    //create a new array
     var cipherValues = new Array(0);
 
+    //for each item, add it to cipherValues
     for (var j = 0; j < keyLen; j++){
         cipherValues[j] = createCipher(code.charAt(j));
     }
@@ -187,24 +206,40 @@ function newCipher(plainText, code){
     //Cipher the text
     var len = plainText.length;
 
+    //set an empty output
     var out = "";
+
+    //for each item in the plaintext
     for (var i = 0; i < len; i++) {
+
+        //if the key is in the ascii value range
         if ((plainText.charCodeAt(i) + cipherValues[i % keyLen]) < 127) {
+
+            //apply the cipher on it with the key value
             out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cipherValues[i % keyLen]));
-        }
-        else {
+
+        //if the key is out of range, subtract 94 so that is stays in the ascii range
+        } else {
+
+            //apply the ciher to it with the key value
             out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cipherValues[i % keyLen] - 94));
         }
     }
+
+    //return the new output
     return out;
 }
 
+//function the Decipher things
 function newDecipher(plainText, code){
 
+    //get the key length
     var keyLen = code.length;
 
+    //create the new array
     var cipherValues = new Array(0);
 
+    //for each item, add it to cipherValues
     for (var j = 0; j < keyLen; j++){
         cipherValues[j] = createCipher(code.charAt(j));
     }
@@ -212,24 +247,46 @@ function newDecipher(plainText, code){
     //Cipher the text
     var len = plainText.length;
 
+    //set a empty output
     var out = "";
+
+    //for each item in the plaintext
     for (var i = 0; i < len; i++) {
+
+        //if the key is in the ascii value range
         if ((plainText.charCodeAt(i) - cipherValues[i % keyLen]) > 31) {
+
+            //apply the decipher for the char
             out = out.concat(String.fromCharCode(plainText.charCodeAt(i) - cipherValues[i % keyLen]));
-        }
-        else {
+
+        //if they is out of the ascii value range
+        } else {
+
+            //apply the decipher for the char + 94
             out = out.concat(String.fromCharCode(plainText.charCodeAt(i) - cipherValues[i % keyLen] + 94));
         }
     }
+
+    //return the Deciphered text
     return out;
 }
 
+//code to create Cipher
 function createCipher(code) {
+
+    //get the var length
     var len = code.length;
+
+    //set the cipher value to 0
     var cipherVal = 0;
 
+    //for each item in text
     for (var j = 0; j < len; j++){
+
+        //add the cipher value
         cipherVal += code.charCodeAt(j);
     }
+
+    //return the cipher Value mod 94
     return cipherVal % 94;
 }
