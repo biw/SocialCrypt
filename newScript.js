@@ -18,11 +18,31 @@ chrome.storage.sync.get('CurrentCy', function(result) {
     Cipher = result.CurrentCy;
 });
 
-//function to inject code to Facebook
-function facebookadder() {
-    var facebook_content = '<div class="fb_added_content">Choose Encryption Key: <input id="fb_added_keys"> <button id="encypt_button">Encypt text</button></div>'
-    $("#contentArea").prepend(facebook_content);
-}
+
+//$(document).delegate("._52lb","DOMSubtreeModified", function() {
+$(document).ready( function() {
+
+    var settingsBox = $("._52lb");
+
+    window.setTimeout(function () {
+
+        if($("#enc-area").length == 0) {
+
+            var enc_data = '<button id="encypt_button">Encypt & Post</button>';
+            $("._1dsp").after("<div id='enc-area'>" + enc_data + "</div>");
+
+            $("#enc-area").append('<div id="cypherList"></div><div id="cypherButton">Select Encryption Key <div id="downArrow"></div></div>');
+
+
+            var cipherLen = Cipher.length;
+
+            for(var i = 0; i < cipherLen; i++) {
+               $("#cypherList").append('<li>' + Cipher[i] + '</li>');
+            }
+        }
+
+    }, 500)
+});
 
 
 
@@ -59,9 +79,6 @@ var currentItem = $(".userContent")[0];
 //when the page loads
 $(document).ready(function () {
 
-    //load the facebook
-    facebookadder();
-
     //run main to start
     main();
 
@@ -81,7 +98,6 @@ $(document).on("click", function () {
             //console.log("change url");
             var fb_value = $("#fb_added_keys").val();
             $(".fb_added_content").remove();;
-            facebookadder();
             $("#fb_added_keys").val(fb_value);
 
             //run main again
@@ -127,8 +143,9 @@ function main() {
             var correctCipher = "";
 
             //get the Cipher length
-            var cipherLen = Cipher.length;
-
+            if(Cipher) {
+                var cipherLen = Cipher.length;
+            }
             //set the output
             var out = "";
             //console.log(cipherLen);
