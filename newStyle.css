@@ -75,6 +75,9 @@
     float: right;
     margin: 0 10px 0 0;
 }
+#cypherButton:hover {
+    cursor: pointer;
+}
 
 #downArrow {
     width: 9px;
@@ -89,14 +92,22 @@
 }
 
 #cypherList {
-    display: block;
-    position: relative;
-    margin: -40px 0px -76px;
+    display: none;
+    position: absolute;
     border: 1px solid #000;
-    top: 66px;
-    left: 212px;
+    top: 147px;
+    left: 200px;
     width: 138px;
     z-index: 5;
     background: #fff;
-    padding: 10px;
+    padding: 8px 0;
+}
+
+#cypherList li {
+    padding: 2px 10px;
+    list-style: none;
+}
+#cypherList li:hover {
+    background: #ccc;
+    cursor: pointer;
 }

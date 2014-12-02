@@ -19,8 +19,8 @@ chrome.storage.sync.get('CurrentCy', function(result) {
 });
 
 
-//$(document).delegate("._52lb","DOMSubtreeModified", function() {
-$(document).ready( function() {
+$(document).delegate("._52lb","DOMSubtreeModified", function() {
+//$(document).ready( function() {
 
     var settingsBox = $("._52lb");
 
@@ -37,20 +37,41 @@ $(document).ready( function() {
             var cipherLen = Cipher.length;
 
             for(var i = 0; i < cipherLen; i++) {
-               $("#cypherList").append('<li>' + Cipher[i] + '</li>');
+
+                if(Cipher[i] != "") {
+                    $("#cypherList").append('<li>' + Cipher[i] + '</li>');
+                }
             }
         }
 
     }, 500)
 });
 
+//when the cypher button is clicked
+$(document).delegate("#cypherButton", "click", function() {
+
+    //toggle the list
+    $("#cypherList").toggle();
+});
+
+//when a list item is click
+$(document).delegate("#cypherList li", "click", function (x) {
+
+    var clicked_item = x.target.firstChild.data;
+
+    //change the view value
+    $("#cypherButton").text(clicked_item);
+
+    //change the list view
+    $("#cypherList").hide();
+});
 
 
 //when the user clicks to encypt
 $(document).delegate("#encypt_button", "click", function(x) {
 
     //get the value
-    var userCipher = $("#encypt_button").prev().val();
+    var userCipher = $("#cypherButton").text();
     var UserText = $(".mentionsTextarea").val();
 
     //create the new Cipher and Hash
