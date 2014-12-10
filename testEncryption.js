@@ -1,5 +1,6 @@
 /**
- * Created by Ben on 11/8/14.
+ * Created by Mike on 12/9/14.
+ * My playground to test out new encryptions
  */
 
 
@@ -76,17 +77,13 @@ $(document).delegate("#encypt_button", "click", function(x) {
 
     //get length of message in hex
     var textLength = userText.length.toString(16);
-    //make textLenght a 4-digit number
     while (textLength.length < 4){
         textLength = "0"+textLength;
     }
 
-    //add length to the beginning of the message
     userText = textLength+userText;
 
-    //determine how much filler text is necessary
     var fillerLength = 103 - userText.length;
-    //add filler text to message
     while (fillerLength > 0){
         userText += Math.floor(Math.random() * 10);
         fillerLength--;
@@ -144,7 +141,7 @@ $(document).on("click", function () {
             main();
         }
 
-    //two seconds
+        //two seconds
     }, 2000);
 });
 
@@ -200,29 +197,27 @@ function main() {
                 //if the key is correct
                 if (rightKey) {
 
+                    //change the found flag
+                    foundItem = true;
+
                     //set the correctCiphers for the current one
                     correctCipher = Cipher[j];
 
                     //console.log("Found it", Cipher[j]);
 
-                    //decipher the message
+                    //set the output
                     out = newDecipher(message, correctCipher);
 
-                    //get the messageLength and convert to decimal
-                    var messageLength = parseInt(out.slice(0, 4), 16);
+                    messageLength = parseInt(out.slice(0, 4), 16);
 
-                    //grab only the actual message from the full sent message
                     out = out.slice(4,(messageLength+4));
 
                     //output new text
                     dataDom.html(out);
-
-                    //change the found flag
-                    foundItem = true;
                 }
             }
 
-            //if we haven't found the right key
+            //if we havn't found the right key
             if(!foundItem) {
 
                 //tell the user
@@ -281,7 +276,7 @@ function newCipher(plainText, code){
             //apply the cipher on it with the key value
             out = out.concat(String.fromCharCode(plainText.charCodeAt(i) + cipherValues[i % keyLen]));
 
-        //if the key is out of range, subtract 94 so that is stays in the ascii range
+            //if the key is out of range, subtract 94 so that is stays in the ascii range
         } else {
 
             //apply the ciher to it with the key value
@@ -322,7 +317,7 @@ function newDecipher(plainText, code){
             //apply the decipher for the char
             out = out.concat(String.fromCharCode(plainText.charCodeAt(i) - cipherValues[i % keyLen]));
 
-        //if they is out of the ascii value range
+            //if they is out of the ascii value range
         } else {
 
             //apply the decipher for the char + 94
