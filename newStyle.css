@@ -100,7 +100,7 @@
     width: 138px;
     z-index: 5;
     background: #fff;
-    padding: 8px 0;
+    padding: 8px 0px;
 }
 
 #cypherList li {
@@ -110,4 +110,11 @@
 #cypherList li:hover {
     background: #ccc;
     cursor: pointer;
+}
+
+#cypherin {
+    border: none;
+    border-top: 1px solid #000;
+    padding: 7px 10px;
+    width: 118px;
 }

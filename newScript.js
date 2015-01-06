@@ -19,7 +19,7 @@ chrome.storage.sync.get('CurrentCy', function(result) {
 });
 
 
-$(document).delegate("._52lb","DOMSubtreeModified", function() {
+$(document).delegate("._52lb", "DOMSubtreeModified", function() {
 //$(document).ready( function() {
 
     var settingsBox = $("._52lb");
@@ -42,9 +42,14 @@ $(document).delegate("._52lb","DOMSubtreeModified", function() {
                     $("#cypherList").append('<li>' + Cipher[i] + '</li>');
                 }
             }
+            $("#cypherList").append("<input id='cypherin' placeholder='enter new key'>");
         }
 
-    }, 500)
+    }, 500);
+});
+
+$(document).delegate(".mentionsTextarea", "click", function () {
+    $("#enc-area").show();
 });
 
 //when the cypher button is clicked
@@ -102,16 +107,29 @@ $(document).delegate("#encypt_button", "click", function(x) {
 
     //add the values to the website
     $(".mentionsTextarea").val(newText);
-    $(".mentionsTextarea").parent().parent().parent().next().val(newText);
+
+    $("#enc-area").hide();
 
     //console.log(userCipher);
     chrome.storage.sync.get('CurrentCy', function(result) {
-        result.CurrentCy.push(userCipher);
+
+        var newKey = true;
+
+        for(var i = 0; i < Cipher.length; i++) {
+
+            if(userCipher == Cipher[i]) {
+                newKey = false;
+            }
+        }
+
+        if(newKey) {
+            result.CurrentCy.push(userCipher);
+        }
 
         //console.log(result.CurrentCy);
         chrome.storage.sync.set({'CurrentCy': result.CurrentCy});
     });
-})
+});
 
 //get the start item
 var currentItem = $(".userContent")[0];
