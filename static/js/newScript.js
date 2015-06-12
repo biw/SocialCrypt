@@ -68,7 +68,7 @@ $(document).delegate("#encypt_button", "click", function(x) {
 
     //cipher the text
     var encryptedText = CryptoJS.AES.encrypt(userText, userCipher)
-    var finalValue = "{enc: " + encryptedText + "}"
+    var finalValue = "{enc:" + encryptedText + ":enc}"
 
     //add the values to the website
     $(".mentionsTextarea").val(finalValue)
@@ -134,11 +134,13 @@ function main() {
         var foundItem = false
 
         //check the encryption flag
-        var encryt_flag = dataText.slice(0, 6)
-        var encryptedText = dataText.slice(6, -1)
+        var encryt_flag = dataText.slice(0, 5)
+        var encryptedText = dataText.slice(5, -5)
+
+        console.log(encryptedText)
 
         //if the flag is valid, change the message
-        if(encryt_flag === "{enc: ") {
+        if(encryt_flag === "{enc:") {
 
             //set the output
             var unencryptedText = ""

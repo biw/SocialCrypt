@@ -10,16 +10,15 @@
   ],
 
   "browser_action": {
-    "default_icon": "lockicon.png",
-    "default_popup": "popup.html"
+    "default_icon": "/static/img/lockicon.png",
+    "default_popup": "/static/html/popup.html"
   },
 
   "content_scripts": [
     {
       "matches": ["http://www.facebook.com/*", "https://www.facebook.com/*"],
-      "css": ["newStyle.css"],
-      "js": ["jquery-2.1.1.min.js", "CryptoJS_AES_SHA256.js", "newScript.js"]
+      "css": ["/static/css/newStyle.css"],
+      "js": ["/static/js/jquery-2.1.1.min.js", "/static/js/CryptoJS_AES_SHA256.js", "/static/js/newScript.js"]
     }
   ]
-
 }
