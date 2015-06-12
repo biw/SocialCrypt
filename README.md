@@ -4,11 +4,11 @@ A nice little extention to encypt/decrypt Facebook posts.
 
 Future Plans
 -----
-[ ] Facebook comments
-[ ] Twitter posts
-[ ] Reddit posts/comments
-[ ] Clean up UI
-[x] AES Encryption 
+ - [ ] Facebook comments
+ - [ ] Twitter posts
+ - [ ] Reddit posts/comments
+ - [ ] Clean up UI
+ - [x] AES Encryption 
 
 How to install
 -----
