@@ -4,6 +4,7 @@ A nice little extention to encypt/decrypt Facebook posts.
 
 Future Plans
 -----
+ - [ ] Tests
  - [ ] Facebook comments
  - [ ] Twitter posts
  - [ ] Reddit posts/comments
