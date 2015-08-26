@@ -27,8 +27,8 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "css": ["/static/css/newStyle.css"],
-      "js": ["/static/js/jquery-2.1.1.min.js", "/static/js/CryptoJS_AES_SHA256.js", "/static/js/newScript.js"]
+      "css": ["/static/css/style.css"],
+      "js": ["/static/js/jquery-2.1.1.min.js", "/static/js/CryptoJS_AES_SHA256.js", "/static/js/script.js"]
     }
   ]
 }
