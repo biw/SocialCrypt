@@ -93,87 +93,36 @@ $(document).delegate("#encypt_button", "click", function(x) {
     })
 })
 
-//get the start item
-var currentItem = $(".userContent")[0]
 
-//when the page loads
-$(document).ready(function () {
-    main()
-})
 
-//when someone clicks something
-$(document).on("click", function () {
+var pageUnencrypter = function() {
+    $("span, p").each(function(i, obj) {
 
-    //wait two seconds
-    window.setTimeout(function () {
+        var new0 = $(this).html().replace(/\{enc:([^:]+):enc}/gim, function(match, key) {
+            console.log(match);
+            for(var i = 0; i < Cipher.length; i++) {
 
-        //if the items has changed
-        if ($(".userContent")[0] != currentItem) {
-            var fb_value = $("#fb_added_keys").val()
-            $(".fb_added_content").remove()
-            $("#fb_added_keys").val(fb_value)
-            main()
-        }
-
-    //two seconds
-    }, 2000)
-})
-
-function main() {
-
-    //get the amount of entrees
-    var entries = $(".userContent").length
-
-    //loop through the items
-    for (var i = 0; i < entries; i++) {
-
-        //slice up the items
-        var dataDom = $(".userContent").slice(i, i + 1)
-        var dataText = dataDom.text()
-
-        var foundItem = false
-
-        //check the encryption flag
-        var encryt_flag = dataText.slice(0, 5)
-        var encryptedText = dataText.slice(5, -5)
-
-        console.log(encryptedText)
-
-        //if the flag is valid, change the message
-        if(encryt_flag === "{enc:") {
-
-            //set the output
-            var unencryptedText = ""
-
-            //for each of the keys
-            for(var j = 0; j < Cipher.length; j++) {
-
-                //set the current key
-                unencryptedText =  CryptoJS.AES.decrypt(encryptedText, Cipher[j])
+                var cryptString = CryptoJS.AES.decrypt(key, Cipher[i])
 
                 try {
-                    unencryptedText = CryptoJS.enc.Utf8.stringify(unencryptedText)
+                    cryptString = CryptoJS.enc.Utf8.stringify(cryptString)
                 } catch(err) {
-                    unencryptedText = ""
+                    cryptString = ""
                 }
 
-                //if the key is correct
-                if (unencryptedText.length) {
+                if(cryptString.length) {
 
-                    //output new text
-                    dataDom.html(unencryptedText)
-
-                    //change the found flag
-                    foundItem = true
+                    return cryptString.replace(/</gim, "&#60;")
                 }
             }
-
-            //if we haven't found the right key
-            if(!foundItem) {
-
-                //tell the user
-                dataDom.text("<Invalid Creditials>")
-            }
-        }
-    }
+            return "{enc:Invalid Keys:enc}"
+        })
+        $(this).html(new0)
+    })
 }
+
+(function() {
+    console.log("code started")
+    pageUnencrypter()
+
+})();

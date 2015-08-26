@@ -1,7 +1,9 @@
-/**
- * Created by Ben on 11/8/14.
- * Code for the popup window
- */
+chrome.browserAction.onClicked.addListener(function(tab) {
+    chrome.tabs.executeScript({
+        code: '$("span, p").each(function(){var e=$(this).html().replace(/\{enc:([^:]+):enc}/gim,function(e,n){console.log(e);for(var r=0;r<Cipher.length;r++){var t=CryptoJS.AES.decrypt(n,Cipher[r]);try{t=CryptoJS.enc.Utf8.stringify(t)}catch(c){t=""}if(t.length)return t.replace(/</gim,"&#60;")}return console.log(t),"{enc:Invalid Keys:enc}"});$(this).html(e)});'
+    });
+});
+
 
 //get if the extention is enabled
 chrome.storage.sync.get('EncEnabled', function (result) {
@@ -18,7 +20,7 @@ chrome.storage.sync.get('EncEnabled', function (result) {
         //empty the checkbox
         $("#checked").html('<input type="checkbox" id="enc" name="enc">');
     }
-});
+})
 
 //get the current ciphers
 chrome.storage.sync.get('CurrentCy', function(result) {
