@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "FB Post Encryption",
-  "description": "This extension Eny/Dec messages in Facebook.",
+  "name": "SocialCrypt",
+  "description": "Encypt/Decrypt messages across the web.",
   "version": "0.1",
 
   "permissions": [
@@ -28,7 +28,7 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "css": ["/static/css/style.css"],
-      "js": ["/static/js/jquery-2.1.1.min.js", "/static/js/CryptoJS_AES_SHA256.js", "/static/js/script.js"]
+      "js": ["/static/js/jquery-2.1.4.min.js", "/static/js/CryptoJS_AES_SHA256.js", "/static/js/script.js"]
     }
   ]
 }
