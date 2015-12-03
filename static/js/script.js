@@ -116,13 +116,13 @@ var pageUnencrypter = function() {
                 }
             }
             return "{enc:Invalid Keys:enc}"
-        });
+        })
         $(this).html(new0)
     })
 };
 
 (function() {
-    console.log("code started");
+    console.log("code started")
     pageUnencrypter()
 
 })();

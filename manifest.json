@@ -14,7 +14,8 @@
   ],
 
   "browser_action": {
-    "default_icon": "/static/img/lockicon.png"
+    "default_icon": "/static/img/lockicon.png",
+    "default_popup": "/static/html/popup.html"
   },
 
   "background": {
@@ -24,11 +25,9 @@
   },
 
 
-  "content_scripts": [
-    {
-      "matches": ["http://*/*", "https://*/*"],
-      "css": ["/static/css/style.css"],
-      "js": ["/static/js/jquery-2.1.4.min.js", "/static/js/CryptoJS_AES_SHA256.js", "/static/js/script.js"]
-    }
-  ]
+  "content_scripts": [{
+    "matches": ["http://*/*", "https://*/*"],
+    "css": ["/static/css/style.css"],
+    "js": ["/static/js/jquery-2.1.4.min.js", "/static/js/CryptoJS_AES_SHA256.js", "/static/js/script.js"]
+  }]
 }
