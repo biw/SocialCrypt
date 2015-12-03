@@ -1,3 +1,18 @@
+$('#enc-keys').submit(function () {
+    console.log('item: '+ $('input').val());
+    if ($('#enc-keys-input').val() !== '') {
+        var inputValue = $('#enc-keys-input').val();
+        $('ul').append('<li>' + inputValue + '<a href="">x</a></li>');
+    };
+    $('#enc-keys-input').val('');
+    return false;
+});
+
+$(document).on('click', 'a', function (e) {
+    e.preventDefault();
+    $(this).parent().remove();
+});
+
 chrome.browserAction.onClicked.addListener(function(tab) {
     chrome.tabs.executeScript({
         code: '$("span, p").each(function(){var e=$(this).html().replace(/\{enc:([^:]+):enc}/gim,function(e,n){console.log(e);for(var r=0;r<Cipher.length;r++){var t=CryptoJS.AES.decrypt(n,Cipher[r]);try{t=CryptoJS.enc.Utf8.stringify(t)}catch(c){t=""}if(t.length)return t.replace(/</gim,"&#60;")}return console.log(t),"{enc:Invalid Keys:enc}"});$(this).html(e)});'
