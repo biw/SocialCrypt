@@ -5,6 +5,13 @@
   "description": "Encypt/Decrypt messages across the web.",
   "version": "0.1",
 
+  "icons": {
+    "16": "static/img/lockicon.png",
+    "32": "static/img/lockicon.png",
+    "48": "static/img/lockicon.png",
+    "128": "static/img/lockicon.png"
+  },
+
   "permissions": [
     "storage",
     "tabs",

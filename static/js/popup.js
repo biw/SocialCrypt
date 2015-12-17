@@ -2,7 +2,7 @@ $('#enc-keys').submit(function () {
     console.log('item: '+ $('input').val());
     if ($('#enc-keys-input').val() !== '') {
         var inputValue = $('#enc-keys-input').val();
-        $('ul').append('<li>' + inputValue + '<a href="">x</a></li>');
+        $('ul').append('<li><a href="">x</a> ' + inputValue + '</li>');
     };
     $('#enc-keys-input').val('');
     return false;

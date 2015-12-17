@@ -18,17 +18,17 @@ body {
     padding: 0 0 0 0;
     font-size: 14px;
     color: #222;
-
 }
 
 .title {
     width: 230px;
     height: 25px;
     padding: 10px;
-    background: lightsteelblue;
+    background: #722d8e;
     font-weight: 700;
     font-size: 18px;
     text-align: left;
+    color: #FFF;
     margin-bottom: 10px;
 }
 
@@ -45,15 +45,35 @@ body {
 }
 
 #save {
-    background: lightsteelblue;
+    background: #722d8e;
+    color: #FFF;
     text-align: center;
     padding: 5px;
     border-radius: 3px;
     margin: auto;
     display: block;
-    margin: 40px auto 0 auto;
+    margin: 30px auto px auto;
 }
 
 #save:hover {
     cursor: pointer;
+}
+
+#enc-keys-input {
+    background: #DDD;
+    padding: 5px;
+    border-radius: 3px;
+    margin: 5px 5px 0px 5px;
+    width: 240px;
+    color: #722d8e;
+}
+
+#enc-keys-label {
+    margin: 5px 5px 5px 5px;
+    color: #722d8e;
+}
+
+#enc-keys-list {
+    margin: 5px 5px 5px 5px;
+    color: #722d8e;
 }
